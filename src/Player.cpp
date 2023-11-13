@@ -33,7 +33,7 @@ void Player::move(InputData inputData, float deltaTime)
         //Move player back if collided with level geometry
         if (pRectangle->collidesWith(this))
         {
-            sf::Transformable::move(sf::Vector2f(-xSpeed, -ySpeed));
+            sf::Transformable::move(sf::Vector2f(-xSpeed, 0.0f));
         }
     }
     
@@ -67,6 +67,16 @@ void Player::update(float deltaTime)
     if (m_pGame->getDoor()->collidesWith(this))
     {
         m_pGame->getDoor()->setTriggered(true);
+    }
+    auto pRectangles = m_pGame->getRectangles();
+    for (auto& pRectangle : pRectangles)
+    {
+        //Move player back if collided with level geometry
+        if (pRectangle->collidesWith(this))
+        {
+            sf::Transformable::move(sf::Vector2f(0.0f, Gravity * deltaTime));
+            // m_isGrounded = true;
+        }
     }
 }
 

@@ -22,10 +22,12 @@ public:
 
     bool isDead() const { return m_isDead; }
     void setIsDead(bool isDead) { m_isDead = isDead; }
+    // int getGravity() const {return};
 
 private:
     bool    m_isDead = false;
     float   m_jumpTimer = 0.0f;
     Game*   m_pGame;
     int     m_coins = 0;
+    // bool    m_isPushed = false;
 };

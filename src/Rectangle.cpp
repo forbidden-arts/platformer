@@ -1,5 +1,6 @@
 
 #include "Rectangle.h"
+#include "Constants.h"
 #include <SFML/Graphics.hpp>
 
 Rectangle::Rectangle(sf::Vector2f size, sf::Vector2f position) : m_size(size)

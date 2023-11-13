@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Controller.h"
 #include <SFML/Window/Keyboard.hpp>
 
 class Player;

@@ -22,4 +22,5 @@ public:
 private:
     sf::Color m_color = sf::Color::White;
     sf::Vector2f m_size;
+    int m_xPush = -20;
 };

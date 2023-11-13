@@ -18,6 +18,7 @@ Game::Game() :
     m_pDoor(std::make_unique<Door>(this)),
     m_score(0),
     m_clearedLevels(0)
+    // m_xPush(-20)
 {
     
     m_pGameInput = std::make_unique<GameInput>(this, m_pPlayer.get());
@@ -100,19 +101,37 @@ void Game::update(float deltaTime)
             m_pPlayer->updateIsDead();
             m_pPlayer->update(deltaTime);
 
+            for (auto& rectangle : m_pRectangles)
+            {
+                sf::Vector2f position = rectangle->getPosition();
+                position.x += m_xPush * deltaTime * (m_clearedLevels + 1);
+                position.y += Gravity * deltaTime;
+                rectangle->setPosition(position);
+
+                if (position.y > ScreenHeight || position.x < 0 || position.x > ScreenWidth)
+                {
+                    position.y = -TileSizeY - rand() % static_cast<int>(2 * TileSizeY);
+                    position.x = (rand() % ScreenWidth) + m_xPush;
+                    rectangle->setPosition(position);
+                }
+            }
+
             if (m_pPlayer->isDead())
+            {
+                m_xPush = -10;
+                m_score = 0;
+                m_clearedLevels = 0;
+                Gravity = 180.0f;
                 resetLevel(MapArray1);
-                
+            }
             if (m_pDoor->isTriggered())
             {
+                m_xPush *= 1.5;
+                Gravity *= 1.1;
                 m_clearedLevels++;
-                if (m_clearedLevels == LevelCount)
+                if (m_clearedLevels % 2)
                 {
-                    m_clearedLevels = 0;
-                    m_score = 0;
-                    m_state = State::WAITING;
-                    m_pClock->restart();
-                    resetLevel(MapArray1);
+                    resetLevel(MapArray2);
                 }
                 else
                 {
@@ -135,7 +154,6 @@ void Game::update(float deltaTime)
         i++;
     }
 
-    
 }
 
 void Game::draw(sf::RenderTarget &target, sf::RenderStates states) const
@@ -145,7 +163,7 @@ void Game::draw(sf::RenderTarget &target, sf::RenderStates states) const
     {
         sf::Text startText;
         startText.setFont(m_font);
-        startText.setString("Game Start!");
+        startText.setString("Hard Rain");
         startText.setFillColor(sf::Color::White);
         startText.setPosition(80.0f, 80.0f);
         startText.setStyle(sf::Text::Bold);
