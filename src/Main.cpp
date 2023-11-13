@@ -5,6 +5,9 @@
 #include <memory>
 #include <iostream>
 
+
+// I wish that I knew CPP. *sigh*
+
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(ScreenWidth, ScreenHeight), "Platformer");

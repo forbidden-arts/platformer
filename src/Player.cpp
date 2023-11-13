@@ -33,17 +33,17 @@ void Player::move(InputData inputData, float deltaTime)
         //Move player back if collided with level geometry
         if (pRectangle->collidesWith(this))
         {
-            sf::Transformable::move(sf::Vector2f(-xSpeed, 0.0f));
+            sf::Transformable::move(sf::Vector2f(XPush * deltaTime, 0.0f));
         }
     }
     
-    setPosition(std::clamp(getPosition().x, 0.0f, (float)ScreenWidth), getPosition().y); //TODO: clean
+    setPosition(std::clamp(getPosition().x, -30.0f, (float)ScreenWidth), getPosition().y); //TODO: clean
 
 }
 
 void Player::updateIsDead()
 {
-    m_isDead = getPosition().y > ScreenHeight;
+    m_isDead = getPosition().y > ScreenHeight || getPosition().x < 0;
     if (m_isDead)
     {
         this->m_coins = 0;
@@ -74,7 +74,7 @@ void Player::update(float deltaTime)
         //Move player back if collided with level geometry
         if (pRectangle->collidesWith(this))
         {
-            sf::Transformable::move(sf::Vector2f(0.0f, Gravity * deltaTime));
+            sf::Transformable::move(sf::Vector2f(0.0f, Gravity * deltaTime * 2));
             // m_isGrounded = true;
         }
     }

@@ -15,8 +15,6 @@ class Door;
 
 namespace sf { class Clock; }
 
-// int Gravity = 180.0f;
-
 class Game : public sf::Drawable
 {
 public:
@@ -60,7 +58,6 @@ private:
     int m_clearedLevels;
     
     int m_score;
-    int m_xPush;
     
     sf::Font m_font;
 };

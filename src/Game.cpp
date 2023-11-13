@@ -104,21 +104,21 @@ void Game::update(float deltaTime)
             for (auto& rectangle : m_pRectangles)
             {
                 sf::Vector2f position = rectangle->getPosition();
-                position.x += m_xPush * deltaTime * (m_clearedLevels + 1);
+                position.x += XPush * deltaTime * (m_clearedLevels + 1);
                 position.y += Gravity * deltaTime;
                 rectangle->setPosition(position);
 
                 if (position.y > ScreenHeight || position.x < 0 || position.x > ScreenWidth)
                 {
                     position.y = -TileSizeY - rand() % static_cast<int>(2 * TileSizeY);
-                    position.x = (rand() % ScreenWidth) + m_xPush;
+                    position.x = (rand() % ScreenWidth) + XPush;
                     rectangle->setPosition(position);
                 }
             }
 
             if (m_pPlayer->isDead())
             {
-                m_xPush = -10;
+                XPush = -20;
                 m_score = 0;
                 m_clearedLevels = 0;
                 Gravity = 180.0f;
@@ -126,8 +126,8 @@ void Game::update(float deltaTime)
             }
             if (m_pDoor->isTriggered())
             {
-                m_xPush *= 1.5;
-                Gravity *= 1.1;
+                XPush *= 1.2;
+                Gravity *= 1.25;
                 m_clearedLevels++;
                 if (m_clearedLevels % 2)
                 {
@@ -135,7 +135,7 @@ void Game::update(float deltaTime)
                 }
                 else
                 {
-                    resetLevel(MapArray2);
+                    resetLevel(MapArray1);
                 }
                 
             }
